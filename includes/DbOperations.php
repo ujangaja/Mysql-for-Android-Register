@@ -35,7 +35,7 @@ class DbOperations {
 	}
 
 
-	public funtion userLogin($username,$pass){
+	public function userLogin($username,$pass){
 		$password = md5($pass);
 		$stmt = $this->con->prepare("SELECT id FROM users WHERE username = ? OR password = ?");
 		$stmt->bind_param("ss",$username,$password);
@@ -47,7 +47,8 @@ class DbOperations {
 	public function getUserByUsername($username){
 		$stmt = $this->con->prepare("SELECT * FROM users WHERE username = ?");
 		$stmt->bind_param("s",$username);
-		$stmt->get_result()->fetch_assoc();
+		$stmt->execute();
+		return $stmt->get_result()->fetch_assoc();
 
 	}
 
